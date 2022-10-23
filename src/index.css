@@ -3,6 +3,8 @@
 @tailwind utilities;
 
 .appContainer {
+    background: black;
+    color: #fff;
     display: flex;
     justify-content: center;
     align-items: start;
