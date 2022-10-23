@@ -29,14 +29,14 @@ const InputTransaction = () => {
     if (otherValue) {
       return {
         'type': typeVal,
-        'amount': amount,
+        'amount': Number.parseInt(amount),
         'category': otherValue,
       }
     }
     else {
       return {
         'type': typeVal,
-        'amount': amount,
+        'amount': Number.parseInt(amount),
         'category': cateValue,
       }
     }

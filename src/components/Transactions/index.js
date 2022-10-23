@@ -8,24 +8,21 @@ const TransactionList = () => {
     const ref = db.ref("/");
     ref.on("value", snapshot => {
       const downData = snapshot.val()
-       setData(Object.entries(downData).map(el=>{
+       const tempdata=(Object.entries(downData).map(el=>{
                 return el;
        }))
+       setData(tempdata.reverse())
     })
   }, [])
 
   return (
-    <div className="history-transactions">
-      <h1 className="transaction-header">History</h1>
-      <div className="transactions-table-container">
-        <ul className="transactions-table">
-          <li className="table-header text-center">
 
-          </li>
-          {data && data.map((el)=>(<Transaction key={el[0]} data= {el}/>))}
-        </ul>
-      </div>
-    </div>
+
+        <table className="transactions-table w-[100%] ">
+          {data && data.reverse().map((el)=>(<Transaction key={el[0]} data= {el}/>))}
+        </table>
+ 
+    
   )
 }
 

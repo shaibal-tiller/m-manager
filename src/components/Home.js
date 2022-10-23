@@ -9,6 +9,7 @@ const Home = () => {
     const goInput = () => {
         navigate('/addTransaction')
     }
+   
     return (
         <div className='appContainer'>
             <button onClick={goInput} className='absolute px-2 rounded-[40px] right-0 top-[5%] bg-slate-500 text-5xl leading-10'>+</button>

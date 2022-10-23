@@ -100,10 +100,7 @@
     border-radius: 8px;
   }
   
-  .transactions-table {
-    padding-left: 0;
-    margin: 0px;
-  }
+  
   
   .table-header {
  
@@ -132,14 +129,15 @@
 
 
   .table-row {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
     list-style-type: none;
     border-bottom: 1px solid #cbd5e1;
     border-right: 1px solid #cbd5e1;
     border-left: 1px solid #cbd5e1;
     padding-left: 10px;
     padding-right: 10px;
+    
   }
   
 
@@ -153,11 +151,7 @@
   
  
   
-  .delete-container {
-    display: flex;
-    width: 10%;
-  }
-  
+ 
   .delete-button {
     background: transparent;
     outline: none;
