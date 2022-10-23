@@ -1,6 +1,8 @@
 import React from 'react'
+import { GetContext } from '../../Context'
 import './index.css'
-const Header = ({balanceAmount=10000,expensesAmount=1000,incomeAmount=1000}) => {
+const Header = ({}) => {
+  const myContext= GetContext()
   return (  
     <div className="money-details-container">
       <div className="balance-container">
@@ -10,7 +12,7 @@ const Header = ({balanceAmount=10000,expensesAmount=1000,incomeAmount=1000}) => 
           className="details-img"
         />
         <p className="details-money" id="balanceAmount">
-             {balanceAmount} ৳
+             {myContext.exin.in - myContext.exin.ex} ৳
           </p>
       </div>
       <div className="income-container">
@@ -22,7 +24,7 @@ const Header = ({balanceAmount=10000,expensesAmount=1000,incomeAmount=1000}) => 
         <div>
           
           <p className="details-money" id="incomeAmount">
-             {incomeAmount} ৳
+             {myContext.exin.in} ৳
           </p>
         </div>
       </div>
@@ -35,7 +37,7 @@ const Header = ({balanceAmount=10000,expensesAmount=1000,incomeAmount=1000}) => 
         <div>
     
           <p className="details-money" id="expensesAmount">
-             {expensesAmount} ৳
+             {myContext.exin.ex} ৳
           </p>
         </div>
       </div>

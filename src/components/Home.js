@@ -12,12 +12,9 @@ const Home = () => {
    
     return (
         <div className='appContainer'>
-            <button onClick={goInput} className='absolute px-2 rounded-[40px] right-0 top-[5%] bg-slate-500 text-5xl leading-10'>+</button>
+            <button onClick={goInput} className='absolute px-2 rounded-[40px] font-bold right-0 top-[5%] hover:scale-105 bg-[#c3cf8d] text-xl leading-14'>+</button>
             <div className='responsive-container'>
                 <Header
-                    balanceAmount={10}
-                    incomeAmount={12}
-                    expensesAmount={35}
                 />
                 <div className=''>
                     <TransactionList />

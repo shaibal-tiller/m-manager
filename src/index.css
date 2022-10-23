@@ -10,7 +10,8 @@
   }
   
   .responsive-container {
-    width: 80%;
+    width: 95%;
     max-width: 550px;
+    min-width: 100px;
   }
   
