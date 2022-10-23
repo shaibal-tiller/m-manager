@@ -49,6 +49,9 @@ const InputTransaction = () => {
     db.ref(`${today}/${time}`).set(readyData).catch((e) => { console.log(e); });
 
   }
+  const handleHome=()=>{
+    navigate('/')
+  }
   const handleContinue = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -147,6 +150,9 @@ const InputTransaction = () => {
               <button type="submit" className="button">
                 Add
               </button>
+              <button  onClick={handleHome} className="ml-24 button">
+              Home
+            </button>
             </div>
           </form>
         </div>
