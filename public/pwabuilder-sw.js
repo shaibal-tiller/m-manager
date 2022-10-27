@@ -1,5 +1,5 @@
 // This is the service worker with the combined offline experience (Offline page + Offline copy of pages)
-
+self.__WB_DISABLE_DEV_LOGS = true
 const CACHE = "pwabuilder-offline-page";
 
 importScripts('https://storage.googleapis.com/workbox-cdn/releases/5.1.2/workbox-sw.js');

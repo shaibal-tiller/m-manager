@@ -1,5 +1,3 @@
-export const incomeCategories = ["Allowance", "Salary", "Loan", "Bonus", "Side Earnings", "Other"];
-export const expenseCategories = ["Food Outing", "Transportations", "House Rent", "Social Life"
-    , "Clothing", "Bevereges", "Cigarette", "Gift", "Beauty",
-     "Health", "Medicine", "Snacks"];
+export const getincomeCategories =()=> JSON.parse(localStorage.getItem('income_cat'))
+export const getexpenseCategories =()=> JSON.parse(localStorage.getItem('expense_cat'))
 

@@ -145,8 +145,9 @@
   .transaction-text {
     color: #475569;
     font-family: 'Roboto';
-    font-size: 12px;
-   
+    font-size: 14px;
+   @apply
+   mt-2
   }
   
  

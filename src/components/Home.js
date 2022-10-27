@@ -1,23 +1,31 @@
-import React from 'react'
+import React, { useEffect ,useState} from 'react'
 import { useNavigate } from 'react-router-dom'
 import Header from './Header/index.js'
 import TransactionList from './Transactions/index.js'
-import { db } from '../util/firebase.js'
+
 const Home = () => {
-    const navigate = useNavigate()
-  
-    const goInput = () => {
-        navigate('/addTransaction')
-    }
-   
+    const navigate = useNavigate();
+    const [name, setName] = useState("")
+    useEffect(() => {
+        if (localStorage.getItem("user") ==null) {
+            navigate('/login')
+        }
+        else {
+            console.log();
+            
+            setName(JSON.parse(localStorage.getItem('user'))['name'])
+           
+        }
+    }, [])
+
+
     return (
         <div className='appContainer'>
-            <button onClick={goInput} className='absolute px-2 rounded-[40px] font-bold right-0 top-[5%] hover:scale-105 bg-[#c3cf8d] text-xl leading-14'>+</button>
+
             <div className='responsive-container'>
-                <Header
-                />
+                <Header/>
                 <div className=''>
-                    <TransactionList />
+                 {name.length>0  &&  <TransactionList  name={name}/>}
                 </div>
             </div>
         </div>

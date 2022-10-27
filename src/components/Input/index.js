@@ -1,20 +1,38 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom'
+import { json, useNavigate } from 'react-router-dom'
 import './index.css'
-import { expenseCategories, incomeCategories } from '../../util/util';
+import { getexpenseCategories, getincomeCategories } from '../../util/util';
 import { db } from '../..//util/firebase.js'
 
 const InputTransaction = () => {
+  const expenseCategories = getexpenseCategories()
+  expenseCategories.push("...+")
+  const incomeCategories = getincomeCategories()
+  incomeCategories.push('...+')
   const titleInput = 10
     ; const amountInput = 10
-  const optionId = ""
-  const transactionTypeOptions = []
+
   const [typeVal, setTypeVal] = useState("Expense");
   const [cateValue, setCateVal] = useState("")
   const [amount, setAmount] = useState(0)
   const [otherValue, setOtherValue] = useState()
   const navigate = useNavigate()
+  const [name, setName] = useState("")
+
+  useEffect(() => {
+    const getName = JSON.parse(localStorage.getItem('user')).name
+    if (getName) {
+      setName(getName)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (cateValue === '...+') {
+      const x = document.getElementById('cateAdd')
+      x.style.display = 'block'
+    }
+  }, [cateValue])
   const handleChange = (e) => {
     setAmount(e.target.value)
   }
@@ -42,14 +60,15 @@ const InputTransaction = () => {
     }
   }
   const upload = () => {
+
     const date = new Date
     const today = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
     const time = date.getTime()
     const readyData = formatData()
-    db.ref(`${today}/${time}`).set(readyData).catch((e) => { console.log(e); });
+    db.ref(`/${name}/transactions/${today}/${time}`).set(readyData).catch((e) => { console.log(e); });
 
   }
-  const handleHome=()=>{
+  const handleHome = () => {
     navigate('/')
   }
   const handleContinue = (e) => {
@@ -72,7 +91,15 @@ const InputTransaction = () => {
       navigate("/")
     }
   }
+  const handleKey = (e) => {
+    if (e.key == 'Enter') {
+      expenseCategories.pop()
+      expenseCategories.push(e.target.value.trim())
+      db.ref(`/${name}/categories/${typeVal=='Income'?'income_cat':'expense_cat'}`).set(expenseCategories).catch((e) => { console.log(e); });
+      document.getElementById("cateAdd").style.display = "none"
 
+    }
+  }
   return (
     <div className='appContainer mt-8'>
       <div className='responsive-container'>
@@ -84,7 +111,7 @@ const InputTransaction = () => {
             </label>
             <select
               id="select"
-              className="input"
+              className="inputa"
               value={typeVal}
 
               onChange={(e) => {
@@ -108,7 +135,7 @@ const InputTransaction = () => {
             <input
               type="number"
               id="amount"
-              className="input"
+              className="inputa"
               value={amount}//{amountInput}
               onChange={handleChange}//{this.onChangeAmountInput}
               placeholder="AMOUNT"
@@ -128,31 +155,33 @@ const InputTransaction = () => {
               onChange={handleChangeOther}
               type="text"
               value={otherValue}
-              className="input"
+              className="inputa"
               placeholder="Other"
             />
             <div id={"category"} className='mb-2 flex-wrap flex category-pallete '>
 
-              {typeVal === "Expense" && expenseCategories.map((el, index) => (
+              {typeVal === "Expense" && expenseCategories && expenseCategories.map((el, index) => (
                 <p onClick={selectCate} key={"ex" + index}
                   className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
               )}
-              {typeVal === "Income" && incomeCategories.map((el, index) => (
+              {typeVal === "Income" && incomeCategories && incomeCategories.map((el, index) => (
                 <p onClick={selectCate} key={"in" + index}
                   className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
               )}
-
+              <div>
+                <input onKeyPress={handleKey} type={'text'} style={{ display: 'none' }} id="cateAdd"
+                  className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg' /> </div>
             </div>
             <div className='btn-container mt-2'>
-              <button onClick={handleContinue} className="button mr-2">
+              <button onClick={handleContinue} className="buttona mr-2">
                 Continue
               </button>
-              <button type="submit" className="button">
+              <button type="submit" className="buttona">
                 Add
               </button>
-              <button  onClick={handleHome} className="ml-24 button">
-              Home
-            </button>
+              <button onClick={handleHome} className="ml-24 buttona">
+                Home
+              </button>
             </div>
           </form>
         </div>
