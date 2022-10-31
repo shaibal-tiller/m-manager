@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../../Context'
 import { db } from '../../util/firebase'
 
 import './index.css'
@@ -10,7 +11,7 @@ const CreateId = () => {
     setValue(e.target.value)
   }
 
-
+const myContext= useContext(AppContext)
   const handleSubmit = (e) => {
     e.preventDefault();
     const data = e.target
@@ -30,6 +31,7 @@ const CreateId = () => {
           else {
             //successful
             const date = new Date()
+            myContext.setLoginSt(true)
             const categories = {
               'income_cat': [
                 'Allowance', 'Salary', 'Loan', 'Bonus', 'Side Earnings', 'Other'

@@ -1,9 +1,15 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { AppContext } from '../../Context'
 import { db } from '../../util/firebase'
 import './index.css'
-
+// if ("serviceWorker" in navigator) {
+//   navigator.serviceWorker
+//       .register("sw2.js")
+//       .then(() => console.log("registered service worker!"));
+// }
 const Login = () => {
+  const myContext= useContext(AppContext)
   const navigate = useNavigate()
   const [value, setValue] = useState()
   const handleChange = (e) => {
@@ -18,6 +24,7 @@ const Login = () => {
           hint.style.color = 'green'
           hint.style.fontSize = '18px'
           hint.innerHTML = "✅ Login Successful!"
+          myContext.setLoginSt(true)
           const refr= db.ref(`${name.trim()}/categories`)
           refr.on('value',snapshotr=>{
           

@@ -8,6 +8,14 @@ const Header = ({ }) => {
     navigate('/addTransaction')
   }
   const myContext = GetContext()
+  const handleIncome=(e)=>{
+    myContext.setOverviewType('Income')
+    navigate('/overview')
+  }
+  const handleExpense=(e)=>{
+    myContext.setOverviewType('Expense')
+    navigate('/overview')
+  }
   return (
     <div>
       <div className="money-details-container">
@@ -21,7 +29,7 @@ const Header = ({ }) => {
             {myContext.exin.in - myContext.exin.ex} ৳
           </p>
         </div>
-        <div className="income-container">
+        <div className="income-container" onClick={handleIncome}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/money-manager/income-image.png"
             alt="income"
@@ -34,7 +42,7 @@ const Header = ({ }) => {
             </p>
           </div>
         </div>
-        <div className="expenses-container">
+        <div className="expenses-container" onClick={handleExpense}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/money-manager/expenses-image.png"
             alt="expense"

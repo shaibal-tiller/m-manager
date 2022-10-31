@@ -10,7 +10,7 @@ const Transaction = ({ data ,name}) => {
 
     const ref = db.ref(`/${name}/transactions/${key}`);
     ref.on("value", snapshot => {
-      // console.log(snapshot.val());
+   
     })
     ref.remove()
 

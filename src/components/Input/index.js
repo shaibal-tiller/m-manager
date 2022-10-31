@@ -95,11 +95,13 @@ const InputTransaction = () => {
     if (e.key == 'Enter') {
       expenseCategories.pop()
       expenseCategories.push(e.target.value.trim())
-      db.ref(`/${name}/categories/${typeVal=='Income'?'income_cat':'expense_cat'}`).set(expenseCategories).catch((e) => { console.log(e); });
+      db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set(expenseCategories).catch((e) => { console.log(e); });
       document.getElementById("cateAdd").style.display = "none"
-
     }
   }
+  useEffect(()=>{
+    setCateVal("")   
+  },[typeVal])
   return (
     <div className='appContainer mt-8'>
       <div className='responsive-container'>

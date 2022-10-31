@@ -15,26 +15,29 @@ const TransactionList = ({ name = "" }) => {
       ref.on("value", snapshot => {
 
         const downData = snapshot.val()
-
-        let tempdata = (Object.entries(downData).map(el => {
-          if (el[0].toString() != 'title') {
-            return el
-          }
-        }))
-        const tempCells = []
-        let ex = 0;
-        let inc = 0;
-        tempdata=(JSON.parse(JSON.stringify(tempdata)));
-        tempdata.reverse().map((el) => {
-          if (el) {
-            const x = getData(el[0], el[1])
-            ex += Number.parseInt(x[1])
-            inc += Number.parseInt(x[2])
-            tempCells.push(x)
-          }
-        })
-        myContext.setExin({ 'ex': ex, 'in': inc })
-        setData(tempCells)
+        console.log(downData);
+        if (downData) {
+          let tempdata = (Object.entries(downData).map(el => {
+            if (el[0].toString() != 'title') {
+              return el
+            }
+          }))
+          const tempCells = []
+          let ex = 0;
+          let inc = 0;
+          tempdata = (JSON.parse(JSON.stringify(tempdata)));
+          tempdata.reverse().map((el) => {
+            if (el) {
+              const x = getData(el[0], el[1])
+              ex += Number.parseInt(x[1])
+              inc += Number.parseInt(x[2])
+              tempCells.push(x)
+            }
+          })
+          myContext.setExin({ 'ex': ex, 'in': inc })
+          myContext.setTnxData(tempCells)
+          setData(tempCells)
+        }
       })
     }
 
