@@ -42,7 +42,9 @@ const handleLogout= ()=>{
 }
   return (
     <AppContext.Provider value={data}>
+
       <div className="App">
+      
         <Routes>
           <Route path='/' element={<Home />} />
           <Route path='/transactions' element={<Home />} />
@@ -51,7 +53,8 @@ const handleLogout= ()=>{
           <Route path='/createAccount' element={<CreateId />} />
           <Route path='/overview' element={<Overview />} />
         </Routes>
-   {  loginSt &&   <button className='absolute bottom-5 left-[10%]' onClick={handleLogout}> LOGOUT </button>}
+   {  loginSt &&   <button className='absolute bottom-0 left-0' onClick={handleLogout}> 
+   <i class="fa fa-power-off"></i> </button>}
       </div>
     </AppContext.Provider>
   );

@@ -27,7 +27,7 @@ const renderCustomizedLabel = ({value, cx, cy, midAngle, innerRadius, outerRadiu
 
 const Example = ({dataval}) => {
 
-console.log(dataval);
+
     return (
         <div className='h-[100vh] w-[100%]'>   
            <ResponsiveContainer width="100%" height="100%">

@@ -11,7 +11,7 @@ const Home = () => {
             navigate('/login')
         }
         else {
-            console.log();
+          
             
             setName(JSON.parse(localStorage.getItem('user'))['name'])
            
@@ -21,9 +21,10 @@ const Home = () => {
 
     return (
         <div className='appContainer'>
-
+        
             <div className='responsive-container'>
-                <Header/>
+            <p className='fixed top-0 '>Welcome <span className='text-[#52f]'>{name.length>0? name.toUpperCase():name}</span></p>
+            <Header/>
                 <div className=''>
                  {name.length>0  &&  <TransactionList  name={name}/>}
                 </div>

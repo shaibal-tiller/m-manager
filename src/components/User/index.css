@@ -56,18 +56,13 @@ body {
     width: auto;
   }
   button {
-    cursor: pointer;
-    background: #00A885;
-    width: 40%;
-    border: 1px solid black;
-    border-radius: 10px;
-    padding: 5px 10px;
-    color: #000;
-    font-size: 20px;
+
+   
     -webkit-transition: 0.3s linear;
     transition: 0.3s linear;
     @apply
     hover:shadow-lg
+    bg-slate-500 ml-4 mb-4 px-3 rounded-md
   }
   span.validate-tooltip {
     background: #D91717;

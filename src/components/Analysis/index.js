@@ -10,7 +10,7 @@ const Overview = () => {
     return { name: el[0], value: el[1] }
   }
   const myContext = useContext(AppContext)
-  console.log(myContext.overviewType);
+ 
   const prepareDate = () => {
     let tempData = {}
     myContext.tnxData.map(el => {

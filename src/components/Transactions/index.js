@@ -15,7 +15,7 @@ const TransactionList = ({ name = "" }) => {
       ref.on("value", snapshot => {
 
         const downData = snapshot.val()
-        console.log(downData);
+       
         if (downData) {
           let tempdata = (Object.entries(downData).map(el => {
             if (el[0].toString() != 'title') {
@@ -38,6 +38,7 @@ const TransactionList = ({ name = "" }) => {
           myContext.setTnxData(tempCells)
           setData(tempCells)
         }
+        else{setData([])}
       })
     }
 

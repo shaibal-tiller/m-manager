@@ -5,16 +5,11 @@ const Transaction = ({ data ,name}) => {
 
 
   const handleDelete = (e) => {
-
     const key = e.target.parentElement.parentElement.parentElement.id;
-
     const ref = db.ref(`/${name}/transactions/${key}`);
     ref.on("value", snapshot => {
-   
     })
     ref.remove()
-
-
   }
   const weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat']
   const getDay = (dat) => {
