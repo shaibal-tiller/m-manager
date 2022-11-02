@@ -6,12 +6,6 @@ import { getexpenseCategories, getincomeCategories } from '../../util/util';
 import { db } from '../..//util/firebase.js'
 
 const InputTransaction = () => {
-  const expenseCategories = getexpenseCategories()
-  expenseCategories.push("...+")
-  const incomeCategories = getincomeCategories()
-  incomeCategories.push('...+')
-  const titleInput = 10
-    ; const amountInput = 10
 
   const [typeVal, setTypeVal] = useState("Expense");
   const [cateValue, setCateVal] = useState("")
@@ -19,30 +13,44 @@ const InputTransaction = () => {
   const [otherValue, setOtherValue] = useState()
   const navigate = useNavigate()
   const [name, setName] = useState("")
+  const [in_cat, setin_cat] = useState(getincomeCategories())
+  const [ex_cat, setex_cat] = useState(getexpenseCategories())
+  const expenseCategories = []
+
+  const incomeCategories = []
+
 
   useEffect(() => {
     const getName = JSON.parse(localStorage.getItem('user')).name
     if (getName) {
       setName(getName)
     }
+        setex_cat([...ex_cat, '...+'])
+        setin_cat([...in_cat, '...+'])
   }, [])
+ 
 
-  useEffect(() => {
-    if (cateValue === '...+') {
-      const x = document.getElementById('cateAdd')
-      x.style.display = 'block'
-    }
-  }, [cateValue])
+
+
+
   const handleChange = (e) => {
     setAmount(e.target.value)
   }
+
   const handleChangeOther = (e) => {
     setOtherValue(e.target.value)
   }
-  const selectCate = (e) => {
 
-    setCateVal(e.target.innerHTML)
+  const selectCate = (e) => {
+    if (e.target.innerHTML !== '...+')
+      setCateVal(e.target.innerHTML)
+    else {
+      setCateVal("")
+      const x = document.getElementById('cateAdd')
+      x.style.display = 'block'
+    }
   }
+
   const formatData = () => {
     if (otherValue) {
       return {
@@ -59,6 +67,7 @@ const InputTransaction = () => {
       }
     }
   }
+
   const upload = () => {
 
     const date = new Date
@@ -68,9 +77,11 @@ const InputTransaction = () => {
     db.ref(`/${name}/transactions/${today}/${time}`).set(readyData).catch((e) => { console.log(e); });
 
   }
+
   const handleHome = () => {
     navigate('/')
   }
+
   const handleContinue = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -83,6 +94,7 @@ const InputTransaction = () => {
     }
 
   }
+
   const handleSubmit = (e) => {
     e.preventDefault()
     e.stopPropagation()
@@ -91,17 +103,65 @@ const InputTransaction = () => {
       navigate("/")
     }
   }
+
   const handleKey = (e) => {
-    if (e.key == 'Enter') {
-      expenseCategories.pop()
-      expenseCategories.push(e.target.value.trim())
-      db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set(expenseCategories).catch((e) => { console.log(e); });
-      document.getElementById("cateAdd").style.display = "none"
+    if (e.target.parentNode.childNodes[0].value.trim().length > 0) {
+      
+     // setex_cat( );
+      // expenseCategories.push(e.target.parentNode.childNodes[0].value.trim())
+       db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()]).catch((e) => { console.log(e); });
+       setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
+       // const current = JSON.parse(localStorage.getItem((typeVal == "Income") ? "income_cat" : "expense_cat"))
+      // localStorage.setItem(typeVal == 'Income' ? 'income_cat' : 'expense_cat', JSON.stringify([...current, e.target.parentNode.childNodes[0].value]));
+      // e.target.parentNode.childNodes[0].value = ""
     }
+    // localStorage.setItem(`${typeVal == 'Income' ? 'income_cat' : 'expense_cat'`)
+    document.getElementById("cateAdd").style.display = "none"
+
   }
-  useEffect(()=>{
-    setCateVal("")   
-  },[typeVal])
+
+useEffect(()=>{
+  localStorage.setItem('expense_cat',JSON.stringify(ex_cat.slice(0,ex_cat.length-1)))
+},[ex_cat])
+  useEffect(() => {
+    setCateVal("")
+  }, [typeVal])
+
+  /*   const getConfirmation = (text) => {
+      if (window.confirm(text) == true) {
+        return true
+      }
+      else {
+        return false
+      }
+    }
+  
+    const deleteCateitem = (x) => {
+      if (x.length > 0) {
+        let newC= []
+       expenseCategories.map((el) => {
+          if (el && el !== x && el!=='...+' )
+          {
+             newC.push(el)
+          }
+  
+        })
+        db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set(newC).catch((e) => { console.log(e); });
+      
+      }
+    }
+  
+  
+    const deleteCate = (e) => {
+      const chk = getConfirmation("Are You Sure to Delete?")
+      if (chk)
+        deleteCateitem(e.target.innerHTML)
+      else
+        console.log("cancel");
+    } */
+
+
+
   return (
     <div className='appContainer mt-8'>
       <div className='responsive-container'>
@@ -162,17 +222,24 @@ const InputTransaction = () => {
             />
             <div id={"category"} className='mb-2 flex-wrap flex category-pallete '>
 
-              {typeVal === "Expense" && expenseCategories && expenseCategories.map((el, index) => (
-                <p onClick={selectCate} key={"ex" + index}
-                  className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
+              {typeVal === "Income" && in_cat.map((el, index) => {
+                return (
+                  <p onClick={selectCate} key={"in" + index}
+                    className='cate hover:cursor-pointer active:bg-[#99dad3] mr-2
+                   mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
+              }
               )}
-              {typeVal === "Income" && incomeCategories && incomeCategories.map((el, index) => (
-                <p onClick={selectCate} key={"in" + index}
-                  className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
+              {typeVal === "Expense" && ex_cat.map((el, index) => {
+                
+                return (
+                  <p onClick={selectCate} key={"ex" + index}
+                    className='cate hover:cursor-pointer active:bg-[#99dad3] mr-2
+                   mb-2 bg-[#acebe5] px-2 rounded-lg'>{el}</p>)
+              }
               )}
-              <div>
-                <input onKeyPress={handleKey} type={'text'} style={{ display: 'none' }} id="cateAdd"
-                  className='hover:cursor-pointer active:bg-[#99dad3] mr-2 mb-2 bg-[#acebe5] px-2 rounded-lg' /> </div>
+              <div id="cateAdd" className='relative rounded-lg' style={{ display: 'none' }} >
+                <input type={'text'}
+                  className='hover:cursor-pointer ' /> <span onClick={handleKey} className='pl-2 absolute right-0 bg-[#e1e1e1] bg-opacity-60  drop-shadow-lg rounded-sm  hover:cursor-pointer'> ADD</span>  </div>
             </div>
             <div className='btn-container mt-2'>
               <button onClick={handleContinue} className="buttona mr-2">

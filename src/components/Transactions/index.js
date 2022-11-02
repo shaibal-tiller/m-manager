@@ -3,6 +3,7 @@ import Transaction from './Transaction'
 import './index.css'
 import { db } from '../../util/firebase'
 import { GetContext } from '../../Context'
+
 const TransactionList = ({ name = "" }) => {
   const myContext = GetContext()
   const [data, setData] = useState();
@@ -65,6 +66,7 @@ const TransactionList = ({ name = "" }) => {
 
 
     <div >
+ 
       {data && <Transaction
         data={data}
         name={name} />}
