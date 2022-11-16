@@ -8,7 +8,10 @@ const TransactionList = ({ name = "" }) => {
   const myContext = GetContext()
   const [data, setData] = useState();
 
-
+  const getDateFormat = (dt) => {
+    const splits = dt.split("-")
+    return `${splits[1]}-${splits[0]}-${splits[2]}`
+  }
   useEffect(() => {
 
     if (name.length > 0) {
@@ -16,7 +19,7 @@ const TransactionList = ({ name = "" }) => {
       ref.on("value", snapshot => {
 
         const downData = snapshot.val()
-       
+
         if (downData) {
           let tempdata = (Object.entries(downData).map(el => {
             if (el[0].toString() != 'title') {
@@ -27,7 +30,16 @@ const TransactionList = ({ name = "" }) => {
           let ex = 0;
           let inc = 0;
           tempdata = (JSON.parse(JSON.stringify(tempdata)));
-          tempdata.reverse().map((el) => {
+
+
+          tempdata =tempdata.sort((a, b) => {
+            if (a && b) {
+              return new Date(getDateFormat(b[0])) - new Date(getDateFormat(a[0]))
+            }
+            
+          })
+          
+          tempdata.map((el) => {
             if (el) {
               const x = getData(el[0], el[1])
               ex += Number.parseInt(x[1])
@@ -39,7 +51,7 @@ const TransactionList = ({ name = "" }) => {
           myContext.setTnxData(tempCells)
           setData(tempCells)
         }
-        else{setData([])}
+        else { setData([]) }
       })
     }
 
@@ -66,7 +78,7 @@ const TransactionList = ({ name = "" }) => {
 
 
     <div >
- 
+
       {data && <Transaction
         data={data}
         name={name} />}
