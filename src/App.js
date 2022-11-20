@@ -53,7 +53,7 @@ const handleLogout= ()=>{
           <Route path='/createAccount' element={<CreateId />} />
           <Route path='/overview' element={<Overview />} />
         </Routes>
-   {    <button className='absolute bottom-0 left-0' onClick={handleLogout}> 
+   {    <button className='fixed z-20 bottom-2 left-2 opacity-90 bg-opacity-75 hover:bg-opacity-100  bg-red-400 hover: px-2 rounded-lg' onClick={handleLogout}> 
    <i class="fa fa-power-off"></i> </button>}
       </div>
     </AppContext.Provider>
