@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { db } from '../../util/firebase'
 import Modal from './modal'
 const Transaction = ({ data, name }) => {
- const getConfirmation = (text) => {
+  const getConfirmation = (text) => {
     if (window.confirm(text) == true) {
       return true
     }
@@ -13,8 +13,8 @@ const Transaction = ({ data, name }) => {
   }
   const handleDelete = (e) => {
     const key = e.target.parentElement.parentElement.parentElement.id;
-    console.log(key);
-  const chk = getConfirmation("Are You Sure?")
+    
+    const chk = getConfirmation("Are You Sure?")
 
     if (chk) {
       const ref = db.ref(`/${name}/transactions/${key}`);
@@ -33,27 +33,27 @@ const Transaction = ({ data, name }) => {
     return day
   }
   const getRows = (element, key) => {
+    console.log(element);
     const reversedElement = element.sort((a, b) => b[0] - a[0])
-
-    return reversedElement.map((dt, ind) => {
+      
+    return reversedElement.map((dt, ind) => {//${dt[1].type === 'Expense' ? 'bg-red-500' : 'bg-green-500'}`
       return (
-        <tr key={dt[0]} id={`${key}/${dt[0]}`} className={`table-row bg-opacity-30 shadow-md ${dt[1].type === 'Expense' ? 'bg-red-500' : 'bg-green-500'}`}>
-
+        <tr key={dt[0]} id={`${key}/${dt[0]}`} className={`table-row bg-opacity-30 shadow-sm ${dt[1].type === 'Expense' ? 'text-[#BDA9FB]' : 'text-[#67E8F9]'}`}>
           <td className="transaction-text font-semibold text-start">{dt[1].category}</td>
           <td className="transaction-text text-center"> {dt[1].amount} ৳</td>
-          <td className="delete-container flex text-end flex-row-reverse">
-          <button
-            className="delete-button text-end"
-            type="button"
-            onClick={handleDelete}
-            id="delete"
-          >
-            <img
-              className="delete-img"
-              src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
-              alt="delete"
-            />
-          </button> 
+          <td className="delete-container flex text-end flex-row-reverse  self-center px-0 bg-[#fff] hover:bg-red-500 rounded-xl absolute md:relative right-8">
+            <button
+              className="delete-button text-end "
+              type="button"
+              onClick={handleDelete}
+              id="delete"
+            >
+              <img
+                className="delete-img "
+                src="https://assets.ccbp.in/frontend/react-js/money-manager/delete.png"
+                alt="delete"
+              />
+            </button>
 
           </td>
         </tr>
@@ -62,21 +62,23 @@ const Transaction = ({ data, name }) => {
   }
 
   return (
-    <table className="transactions-table w-[100%]">
+    <table className="transactions-table w-[100%] ] ">
 
       {data.map((el, index) => {
         return (
 
-          <div key={"tab-" + index} className='mt-2'>
-            <tr className="flex justify-around bg-[#8fc6db] bg-opacity-40 font-bold ">
-              <td className=' text-[14px]  w-[1/2]'>{el[0]} {`[--${getDay(el[0])}--]`}</td>
-              <td className='flex gap-10 text-[14px] bg-[#8fc6db] bg-opacity-30 px-2'>
+          <div key={"tab-" + index} className='mt-2 bg-[#1d1b1b]'>
+            <tr className="flex px-4  bg-opacity-40 font-bold bg-[rgb(26, 25, 25)]  h-4">
+              <td className='  text-[15px] text-start  w-[60%]'>{el[0].split('-')[0]} <span className='text-[.7rem] bg-[#535050] p-1'>{`${getDay(el[0])}`}</span> 
+              <span className='text-[.55rem]'>{`  ${el[0].split('-')[1]}.${el[0].split('-')[2]}`} </span></td>
+              <td className='flex gap-10 text-[14px]  bg-opacity-30 px-2'>
 
-                <p className=' text-[16px] text-red-500'>{el[1] + " ৳"}</p>
-                <p className=' text-[16px] text-green-500'>{el[2] + " ৳"} </p>
+                <p className=' text-[16px] text-[#BDA9FB]'>{el[1] + " ৳"}</p>
+                <p className=' text-[16px] text-[#67E8F9]'>{el[2] + " ৳"} </p>
 
               </td>
             </tr>
+            <hr className='mx-4 mb-0 '/>
             {getRows(el[3], el[0])}
 
           </div>

@@ -110,12 +110,14 @@ const InputTransaction = () => {
      // setex_cat( );
       // expenseCategories.push(e.target.parentNode.childNodes[0].value.trim())
        db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()]).catch((e) => { console.log(e); });
-       setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
+      typeVal == 'Income' ? setin_cat([...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+']): setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
+      
        // const current = JSON.parse(localStorage.getItem((typeVal == "Income") ? "income_cat" : "expense_cat"))
       // localStorage.setItem(typeVal == 'Income' ? 'income_cat' : 'expense_cat', JSON.stringify([...current, e.target.parentNode.childNodes[0].value]));
       // e.target.parentNode.childNodes[0].value = ""
     }
     // localStorage.setItem(`${typeVal == 'Income' ? 'income_cat' : 'expense_cat'`)
+    document.getElementById("cateAdd").childNodes[0].value=""
     document.getElementById("cateAdd").style.display = "none"
 
   }
@@ -163,7 +165,7 @@ useEffect(()=>{
 
 
   return (
-    <div className='appContainer mt-8'>
+    <div className='appContainer pt-8 h-[100vh] bg-black'>
       <div className='responsive-container'>
         <div className="transaction-details">
           <form className="transaction-form" onSubmit={handleSubmit}>

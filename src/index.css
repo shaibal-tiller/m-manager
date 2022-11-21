@@ -3,16 +3,18 @@
 @tailwind utilities;
 
 .appContainer {
-    
-
     display: flex;
     justify-content: center;
     align-items: start;
     min-height: 100vh;   
+    @apply
+    bg-black
   }
   
   .responsive-container {
-    width: 95%;
+    background-color: black;
+    color: azure;
+    width: 100%;
     max-width: 550px;
     min-width: 100px;
   }

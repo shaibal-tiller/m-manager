@@ -17,19 +17,10 @@ const Header = ({ }) => {
     navigate('/overview')
   }
   return (
-    <div>
+    <div className='px-2 bg-black pt-2'>
       <div className="money-details-container">
-        <div className="balance-container">
-          <img
-            src="https://assets.ccbp.in/frontend/react-js/money-manager/balance-image.png"
-            alt="balance"
-            className="details-img"
-          />
-          <p className="details-money" id="balanceAmount">
-            {myContext.exin.in - myContext.exin.ex} ৳
-          </p>
-        </div>
-        <div className="income-container" onClick={handleIncome}>
+        
+        <div className="income-container text-[#67E8F9] " onClick={handleIncome}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/money-manager/income-image.png"
             alt="income"
@@ -42,7 +33,7 @@ const Header = ({ }) => {
             </p>
           </div>
         </div>
-        <div className="expenses-container" onClick={handleExpense}>
+        <div className="expenses-container text-[#BDA9FB]" onClick={handleExpense}>
           <img
             src="https://assets.ccbp.in/frontend/react-js/money-manager/expenses-image.png"
             alt="expense"
@@ -55,8 +46,18 @@ const Header = ({ }) => {
             </p>
           </div>
         </div>
+        <div className="balance-container text-[#BCF062]">
+          <img
+            src="https://assets.ccbp.in/frontend/react-js/money-manager/balance-image.png"
+            alt="balance"
+            className="details-img"
+          />
+          <p className="details-money" id="balanceAmount">
+            {myContext.exin.in - myContext.exin.ex} ৳
+          </p>
+        </div>
       </div>
-      <button onClick={goInput} className='w-[100px] px-2 rounded-[40px] font-bold right-0 top-[5%] hover:scale-105 bg-[#c3cf8d] text-xl leading-14'>+</button>
+      <button onClick={goInput} className='w-[100px] rounded-[40px] font-bold  hover:scale-105 bg-[#5f5f5d] text-xl leading-14'>+</button>
  
     </div>
   )

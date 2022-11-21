@@ -32,7 +32,7 @@ const Overview = () => {
     prepareDate()
   }, [])
   return (
-    <div className='flex flex-col items-center'>
+    <div className='flex flex-col items-center bg-black '>
       <div className='w-[100%]'>
         <Example dataval={data} />
       </div>
