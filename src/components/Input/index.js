@@ -165,7 +165,7 @@ useEffect(()=>{
 
 
   return (
-    <div className='appContainer mt-8'>
+    <div className='appContainer pt-8 h-[100vh] bg-black'>
       <div className='responsive-container'>
         <div className="transaction-details">
           <form className="transaction-form" onSubmit={handleSubmit}>

@@ -23,8 +23,13 @@ const Home = () => {
         <div className='appContainer'>
 
             <div className='responsive-container'>
-                <p className='fixed top-0 '>Welcome <span className='text-[#52f]'>{name.length > 0 ? name.toUpperCase() : name}</span></p>
-                <Header />
+                <div className='sticky top-0 mb-2 z-20'>
+                    <div className='absolute text-[#fff] left-[35%] top-0 '>
+                        <p >Welcome <span className=''>{name.length > 0 ? name.toUpperCase() : name}</span></p>
+                    </div>
+                    <Header />
+                </div>
+
                 <div className='mb-6'>
                     {name.length > 0 && <TransactionList name={name} />}
                 </div>
