@@ -6,6 +6,7 @@ import TransactionList from './Transactions/index.js'
 const Home = () => {
     const navigate = useNavigate();
     const [name, setName] = useState("")
+    const [loading,setLoading]= useState(true)
     useEffect(() => {
         if (localStorage.getItem("user") == null) {
             navigate('/login')
@@ -31,7 +32,19 @@ const Home = () => {
                 </div>
 
                 <div className='mb-6'>
-                    {name.length > 0 && <TransactionList name={name} />}
+                    {loading && <div class="center">
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                        <div className="wave"></div>
+                    </div>}
+                    {name.length > 0 && <TransactionList name={name} loadingSetter={setLoading} />}
                 </div>
             </div>
         </div>
