@@ -2,7 +2,7 @@ import React, { useEffect } from 'react'
 import { useState } from 'react'
 import { db } from '../../util/firebase'
 import Modal from './modal'
-const Transaction = ({ data, name }) => {
+const Transaction = ({ data, name,loadingSetter }) => {
   const getConfirmation = (text) => {
     if (window.confirm(text) == true) {
       return true
@@ -60,7 +60,9 @@ const Transaction = ({ data, name }) => {
       )
     })
   }
-
+useEffect(()=>{
+  loadingSetter(false)
+},[])
   return (
     <table className="transactions-table w-[100%] ] ">
 
