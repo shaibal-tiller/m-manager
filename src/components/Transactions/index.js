@@ -4,7 +4,7 @@ import './index.css'
 import { db } from '../../util/firebase'
 import { GetContext } from '../../Context'
 
-const TransactionList = ({ name = "",loadingSetter }) => {
+const TransactionList = ({ name = "" }) => {
   const myContext = GetContext()
   const [data, setData] = useState();
 
@@ -16,7 +16,6 @@ const TransactionList = ({ name = "",loadingSetter }) => {
 
     if (name.length > 0) {
       const ref = db.ref(`/${name}/transactions`);
-      loadingSetter(true)
       ref.on("value", snapshot => {
 
         const downData = snapshot.val()
@@ -82,8 +81,7 @@ const TransactionList = ({ name = "",loadingSetter }) => {
 
       {data && <Transaction
         data={data}
-        name={name}
-        loadingSetter={loadingSetter} />}
+        name={name} />}
     </div>
 
 

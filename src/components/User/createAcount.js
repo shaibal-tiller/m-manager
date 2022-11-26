@@ -72,10 +72,10 @@ const myContext= useContext(AppContext)
     }
   }
   return (
-    <div className=' bg-black text-[#fff] h-[100vh] p-2'>
+    <div>
       <div className="logo text-center">
       </div>
-      <div className="wrapper  bg-black text-[#fff]">
+      <div className="wrapper">
         <div className="inner-warpper text-center">
           <h2 className="title">Register your account</h2>
           <form onSubmit={handleSubmit} id="formvalidate">
@@ -95,7 +95,7 @@ const myContext= useContext(AppContext)
               <span className="lighting"></span>
             </div>
 
-            <button className='border border-1 py-2 rounded-2xl hover:bg-[#4b4848]' type="submit" id="login">Submit</button>
+            <button type="submit" id="login">Submit</button>
             <div className="clearfix text-red-500">
 
             </div>

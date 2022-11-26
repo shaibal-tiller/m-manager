@@ -70,12 +70,12 @@ const Login = () => {
     }
   }
   return (
-    <div className='h-[100vh] bg-black text-[#fff] pt-4'>
+    <div>
       <div className="logo text-center">
 
       </div>
-      <div className="wrapper  bg-black text-[#fff]">
-        <div className="inner-warpper text-center bg-black text-[#fff]">
+      <div className="wrapper">
+        <div className="inner-warpper text-center">
           <h2 className="title">Login to your account</h2>
           <form onSubmit={handleSubmit} id="formvalidate">
             <div className="input-group">
@@ -83,8 +83,8 @@ const Login = () => {
               <input className="form-control" onChange={handleChange} name="userName" id="userName" type="text" placeholder="" />
               <span className="lighting"></span>
             </div>
-            <div className="input-group flex justify-between">
-              <label className="" htmlFor="userPassword">Password</label>
+            <div className="input-group">
+              <label className="placeholder" htmlFor="userPassword">Password</label>
               <input className="form-control" onChange={handleChange} name="userPassword" id="userPassword" type="password" placeholder="" />
               <span className="lighting"></span>
             </div>
@@ -95,7 +95,7 @@ const Login = () => {
             </div>
           </form>
         </div>
-        <div className="signup-wrapper text-center bg-[#423f3f] text-[#fff]">
+        <div className="signup-wrapper text-center">
           <a href="/createaccount">Don't have an accout? <span className="text-primary">Create One</span></a>
         </div>
       </div>

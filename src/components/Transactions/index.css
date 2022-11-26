@@ -20,18 +20,17 @@
     align-items: flex-start;
     height: 424px;
     width: 100%;
-    border: 1px solid #cbd5e1;
     border-radius: 12px;
-    padding-top: 24px;
-    padding-right: 24px;
-    padding-left: 24px;
     padding-bottom: 32px;
   }
   
   
   
   .transaction-header {
-    color: #475569;
+    width: 100% ;
+    border-radius: 10px;
+    background: rgb(51, 51, 51);
+    color: #b3b8be;
     font-family: 'Roboto';
     font-size: 16px;
     font-weight: 500;

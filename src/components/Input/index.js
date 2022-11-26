@@ -106,17 +106,15 @@ const InputTransaction = () => {
 
   const handleKey = (e) => {
     if (e.target.parentNode.childNodes[0].value.trim().length > 0) {
+      const x=[...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()] 
+      const y= [...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()] 
+      typeVal === 'Income' ?  db.ref(`/${name}/categories/income_cat}`).set(y).catch((e) => { console.log(e); }):
+       db.ref(`/${name}/categories/expense_cat}`).set(x).catch((e) => { console.log(e); });
       
-     // setex_cat( );
-      // expenseCategories.push(e.target.parentNode.childNodes[0].value.trim())
-       db.ref(`/${name}/categories/${typeVal == 'Income' ? 'income_cat' : 'expense_cat'}`).set([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()]).catch((e) => { console.log(e); });
-      typeVal == 'Income' ? setin_cat([...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+']): setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
-      
-       // const current = JSON.parse(localStorage.getItem((typeVal == "Income") ? "income_cat" : "expense_cat"))
-      // localStorage.setItem(typeVal == 'Income' ? 'income_cat' : 'expense_cat', JSON.stringify([...current, e.target.parentNode.childNodes[0].value]));
-      // e.target.parentNode.childNodes[0].value = ""
+      typeVal === 'Income' ? setin_cat([...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+']): setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
+   
     }
-    // localStorage.setItem(`${typeVal == 'Income' ? 'income_cat' : 'expense_cat'`)
+
     document.getElementById("cateAdd").childNodes[0].value=""
     document.getElementById("cateAdd").style.display = "none"
 
@@ -165,11 +163,11 @@ useEffect(()=>{
 
 
   return (
-    <div className='appContainer pt-8 h-[100vh] bg-black'>
+    <div className='appContainer pt-2 h-[100vh] bg-black'>
       <div className='responsive-container'>
         <div className="transaction-details">
           <form className="transaction-form" onSubmit={handleSubmit}>
-            <h1 className="transaction-header">Add Transaction</h1>
+            <h1 className="transaction-header self-center">ADD Transaction</h1>
             <label className="input-label" htmlFor="select">
               TYPE
             </label>
@@ -241,7 +239,9 @@ useEffect(()=>{
               )}
               <div id="cateAdd" className='relative rounded-lg' style={{ display: 'none' }} >
                 <input type={'text'}
-                  className='hover:cursor-pointer ' /> <span onClick={handleKey} className='pl-2 absolute right-0 bg-[#e1e1e1] bg-opacity-60  drop-shadow-lg rounded-sm  hover:cursor-pointer'> ADD</span>  </div>
+                  className= ' text-[#000] px-1 hover:cursor-pointer rounded-md bg-opacity-60' /> 
+                  <span onClick={handleKey} className=' px-1 absolute right-0 text-[#000] bg-[#e1e1e1] bg-opacity-60 
+                   drop-shadow-lg rounded-sm  hover:cursor-pointer'> ADD</span>  </div>
             </div>
             <div className='btn-container mt-2'>
               <button onClick={handleContinue} className="buttona mr-2">
