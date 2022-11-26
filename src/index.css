@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.appContainer {
+    display: flex;
+    justify-content: center;
+    align-items: start;
+    min-height: 100vh;   
+  }
+  
+  .responsive-container {
+    background-color: black;
+    color: azure;
+    width: 100%;
+    max-width: 550px;
+    min-width: 100px;
+  }
+  
