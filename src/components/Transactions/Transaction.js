@@ -33,7 +33,7 @@ const Transaction = ({ data, name }) => {
     return day
   }
   const getRows = (element, key) => {
-    console.log(element);
+
     const reversedElement = element.sort((a, b) => b[0] - a[0])
       
 
