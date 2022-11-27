@@ -10,7 +10,7 @@ const Overview = () => {
     return { name: el[0], value: el[1] }
   }
   const myContext = useContext(AppContext)
- 
+
   const prepareDate = () => {
     let tempData = {}
     myContext.tnxData.map(el => {
@@ -32,9 +32,14 @@ const Overview = () => {
     prepareDate()
   }, [])
   return (
-    <div className='flex flex-col items-center bg-black '>
-      <div className='w-[100%]'>
+    <div className='flex flex-col w-full items-center h-[100vh]'>
+      <div className=' z-[500] text-lg  font-semibold tracking-wider
+       bg-[#5f5c5c] bg-opacity-70 w-full text-[#eee]'>
+        Analysis
+      </div>
+      <div className='h-[100%] bg-[#383737] w-[100%]'>
         <Example dataval={data} />
+
       </div>
 
     </div>
