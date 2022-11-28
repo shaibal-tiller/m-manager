@@ -1,4 +1,4 @@
-import React, { PureComponent } from 'react';
+import React, { PureComponent, useEffect, useState } from 'react';
 import { PieChart, Pie, Tooltip, Sector, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 
@@ -38,9 +38,14 @@ const renderCustomizedLabel = ({ value, cx, cy, midAngle, innerRadius, outerRadi
 };
 
 const Example = ({ dataval }) => {
+    const [dataItems, setDataItems] = useState()
+    useEffect(() => {
+        setDataItems(dataval)
+    }, [dataval])
+
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
-    
+
             return (
                 <div className="custom-tooltip w-20 text-xs text-black bg-[#b9b6b6] bg-opacity-90">
                     <p className="label text-[10px]">{`${payload[0].name}:${payload[0].value}৳`}</p>
@@ -48,26 +53,31 @@ const Example = ({ dataval }) => {
                 </div>
             );
         }
-    
+
         return null;
     };
-    const clickHandler=(d)=>{
-    console.log(d);
+    const clickHandler = (dataItems) => {
+
+    }
+    const handleCheck = (e) => {
+        setDataItems(dataItems.filter((dt) => dt.name !== e.target.name))
+
     }
     const CustomLegend = ({ payload }) => {
-        // console.log(payload[0].color);
+
         return (<div className=' rounded-lg scrollbar-hide overflow-y-scroll
-           max-h-48 w-full   '>
-            {payload.map(el => {
-            
+            max-h-96 w-full   '>
+            {dataItems.length && payload.map(el => {
+
                 return (
-                    <div onClick={()=>{
+                    <div key={el.value} onClick={() => {
                         clickHandler(el.value);
                     }} className='hover:bg-opacity-40 bg-[#504c4c] px-4 w-full h-6 mt-1
                      items-center flex justify-between'>
+                        <input type={'checkbox'} name={el.value} defaultChecked onChange={handleCheck}></input>
                         <div className='rounded-md w-[26px]  px-[2px] shadow-md 
                         font-semibold border-1 border-[#fff] tracking-tighter text-[#fff] text-[.7rem]'
-                         style={{ backgroundColor: el.color }}
+                            style={{ backgroundColor: el.color }}
                         >{parseInt(el.payload.percent.toFixed(2) * 100)}%</div>
                         <div className='flex items-center justify-between w-[80%] text-[#fff]'>
                             <div className='text-xs' >{el.value} </div>
@@ -82,18 +92,20 @@ const Example = ({ dataval }) => {
         //     </div>);
         // })
     }
-    
+
     return (
-        <div className=' h-[100%] w-[100%] '>
-            <ResponsiveContainer >
-                <PieChart  >
-                    <Legend wrapperStyle={{position:'fixed'}}  content={<CustomLegend />} />
-                    <Tooltip  content={<CustomTooltip />} />
+        <div className='h-[100%] w-[100%] '>
+            {dataItems && <ResponsiveContainer >
+                <PieChart>
+
+                    <Legend wrapperStyle={{ position: 'fixed', bottom: 50 }} content={<CustomLegend />} />
+                    <Tooltip content={<CustomTooltip />} />
                     <Pie
-                        data={dataval}
+                        animationDuration={600}
+                        data={dataItems}
                         label={renderCustomizedLabel}
                         labelLine={false}
-                        outerRadius={80}
+                        outerRadius={100}
                         fill="#8884d8"
                         dataKey="value">
                         {data.map((entry, index) => (
@@ -101,10 +113,10 @@ const Example = ({ dataval }) => {
                         ))}
                     </Pie>
                 </PieChart>
-            </ResponsiveContainer>
+            </ResponsiveContainer>}
         </div>
-
-    );
+    )
+    // else return ()
 
 }
 export default Example

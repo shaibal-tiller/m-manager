@@ -32,13 +32,14 @@ const Overview = () => {
     prepareDate()
   }, [])
   return (
-    <div className='flex flex-col w-full items-center h-[100vh]'>
+    <div className='flex flex-col w-full items-center h-[100vh] '>
       <div className=' z-[500] text-lg  font-semibold tracking-wider
        bg-[#5f5c5c] bg-opacity-70 w-full text-[#eee]'>
         Analysis
       </div>
-      <div className='h-[100%] bg-[#383737] w-[100%]'>
-        <Example dataval={data} />
+      <div className='h-[100%] bg-[#383737] w-[100%] '>
+       {data.length &&  <Example dataval={data} />}
+       {!data.length && <div className=' mt-12 text-2xl font-bold text-[#fff] border-[#fff] border-1 '>NO DATA</div>}
 
       </div>
 
