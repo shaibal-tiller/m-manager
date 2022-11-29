@@ -29,6 +29,7 @@ const Home = () => {
                     </div>
                     <Header />
                 </div>
+
                 <div className='mb-6'>
                     {name.length > 0 && <TransactionList name={name} />}
                 </div>
