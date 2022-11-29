@@ -20,7 +20,7 @@ const Home = () => {
 
 
     return (
-        <div className='appContainer'>
+        <div className='appContainer bg-[#000]'>
 
             <div className='responsive-container'>
                 <div className='sticky top-0 mb-2 z-20'>

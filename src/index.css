@@ -2,13 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
+body
+{
+  overscroll-behavior-y: contain;
+}
 .appContainer {
     display: flex;
     justify-content: center;
     align-items: start;
     min-height: 100vh;   
   }
-  
+  .prevent-select {
+  -webkit-user-select: none;
+  -ms-user-select: none; 
+  user-select: none; 
+}
   .responsive-container {
     background-color: black;
     color: azure;

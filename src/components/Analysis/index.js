@@ -11,7 +11,7 @@ const Overview = () => {
   }
   const myContext = useContext(AppContext)
 
-  const prepareDate = () => {
+  const prepareData = () => {
     let tempData = {}
     myContext.tnxData.map(el => {
       el[3].map((elm) => {
@@ -29,7 +29,7 @@ const Overview = () => {
     }
   }
   useEffect(() => {
-    prepareDate()
+    prepareData()
   }, [])
   return (
     <div className='flex flex-col w-full items-center h-[100vh] '>
@@ -39,7 +39,7 @@ const Overview = () => {
       </div>
       <div className='h-[100%] bg-[#383737] w-[100%] '>
        {data.length &&  <Example dataval={data} />}
-       {!data.length && <div className=' mt-12 text-2xl font-bold text-[#fff] border-[#fff] border-1 '>NO DATA</div>}
+       {!data.length? prepareData():<></>}
 
       </div>
 

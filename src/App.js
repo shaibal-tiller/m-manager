@@ -43,7 +43,7 @@ const handleLogout= ()=>{
   return (
     <AppContext.Provider value={data}>
 
-      <div className="App">
+      <div className="App prevent-select">
       
         <Routes>
           <Route path='/' element={<Home />} />

@@ -80,13 +80,13 @@ const Transaction = ({ data, name }) => {
               <span className='text-[.55rem]'>{`  ${el[0].split('-')[1]}.${el[0].split('-')[2]}`} </span></td>
               <td className='flex gap-10 text-[14px]  bg-opacity-30 px-2'>
 
+                <p className=' text-[14px] text-[#BDA9FB]'>{`${el[1]}৳`}</p>
+                <p className=' text-[14px] text-[#67E8F9]'>{`${el[2]}৳`} </p>
 
-                <p className=' text-[16px] text-[#BDA9FB]'>{el[1] + " ৳"}</p>
-                <p className=' text-[16px] text-[#67E8F9]'>{el[2] + " ৳"} </p>
 
               </td>
             </tr>
-            <hr className='mx-4 mb-0 '/>
+            <hr className='mx-4 mb-0'/>
             {getRows(el[3], el[0])}
 
           </div>

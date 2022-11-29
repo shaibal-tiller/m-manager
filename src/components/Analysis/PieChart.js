@@ -21,8 +21,8 @@ const data = [
     {},
 ];
 
-const COLORS = ['#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E',
-    '#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E',];
+// const COLORS = ['#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E',
+//     '#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E',];
 
 const RADIAN = Math.PI / 180;
 const renderCustomizedLabel = ({ value, cx, cy, midAngle, innerRadius, outerRadius, percent, index }) => {
@@ -31,17 +31,29 @@ const renderCustomizedLabel = ({ value, cx, cy, midAngle, innerRadius, outerRadi
     const y = cy + radius * Math.sin(-midAngle * RADIAN);
 
     return (
-        <text className='text-xs' x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central">
+        <text className='text-xs' x={x} y={y} fill="white" textAnchor={x > cx ? 'start' : 'end'} dominantBaseline="central" >
             {`${(percent * 100).toFixed(0)}%`}
         </text>
     );
 };
 
 const Example = ({ dataval }) => {
+    const [COLORS, setColors] = useState(['#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E',
+        '#F08044', '#0088FE', '#0038FE', '#00C49F', '#FFBB28', '#Fc8042', '#1038E'])
     const [dataItems, setDataItems] = useState()
     useEffect(() => {
-        setDataItems(dataval)
+        setDataItems(dataval.sort((a,b)=>{
+            return b.value-a.value;
+        }))
     }, [dataval])
+    useEffect(() => {
+        if (dataItems && dataItems.length) {
+            fetch(`https://www.colr.org/json/colors/random/${dataItems.length}`)
+                .then(data => data.json())
+                .then(d => { setColors(d.matching_colors.map(el => `#${el}`)) })
+                .catch(e => {console.log(e)})
+        }
+    }, [dataItems])
 
     const CustomTooltip = ({ active, payload, label }) => {
         if (active && payload && payload.length) {
@@ -94,18 +106,18 @@ const Example = ({ dataval }) => {
     }
 
     return (
-        <div className='h-[100%] w-[100%] '>
+        <div className='h-[85%] w-[100%] '>
             {dataItems && <ResponsiveContainer >
                 <PieChart>
 
-                    <Legend wrapperStyle={{ position: 'fixed', bottom: 50 }} content={<CustomLegend />} />
+                    <Legend wrapperStyle={{ position: 'fixed', bottom: 50,  }} content={<CustomLegend />} />
                     <Tooltip content={<CustomTooltip />} />
                     <Pie
                         animationDuration={600}
                         data={dataItems}
                         label={renderCustomizedLabel}
                         labelLine={false}
-                        outerRadius={100}
+                        outerRadius={'85%'}
                         fill="#8884d8"
                         dataKey="value">
                         {data.map((entry, index) => (
