@@ -70,11 +70,11 @@ const Login = () => {
     }
   }
   return (
-    <div>
+    <div className='h-[100vh] bg-black pt-8'>
       <div className="logo text-center">
 
       </div>
-      <div className="wrapper">
+      <div className="wrapper bg-black ">
         <div className="inner-warpper text-center">
           <h2 className="title">Login to your account</h2>
           <form onSubmit={handleSubmit} id="formvalidate">
@@ -84,12 +84,13 @@ const Login = () => {
               <span className="lighting"></span>
             </div>
             <div className="input-group">
-              <label className="placeholder" htmlFor="userPassword">Password</label>
+              <label className="palceholder bg-transparent top-[9px] left-[10px] 
+              text-[16px] text-[#cdcdcd]py-[2px]  px-[5px] z-[5]" htmlFor="userPassword">Password</label>
               <input className="form-control" onChange={handleChange} name="userPassword" id="userPassword" type="password" placeholder="" />
               <span className="lighting"></span>
-            </div>
+            </div> 
 
-            <button type="submit" id="login">Login</button>
+            <button className='py-1 ml-4 mb-4 px-3 bg-[#fff] rounded-lg' type="submit" id="login">Login</button>
             <div className="clearfix supporter">
 
             </div>
