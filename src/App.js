@@ -55,6 +55,7 @@ const handleLogout= ()=>{
         </Routes>
    {    <button className='fixed z-20 bottom-2 left-2 opacity-90 bg-opacity-75 hover:bg-opacity-100  bg-red-400 hover: px-2 rounded-lg' onClick={handleLogout}> 
    <i className="fa fa-power-off"></i> </button>}
+
       </div>
     </AppContext.Provider>
   );
