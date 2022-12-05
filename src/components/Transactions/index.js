@@ -4,7 +4,7 @@ import './index.css'
 import { db } from '../../util/firebase'
 import { GetContext } from '../../Context'
 
-const TransactionList = ({ name = "" }) => {
+const TransactionList = ({ name = "", selMonth = "" }) => {
   const myContext = GetContext()
   const [data, setData] = useState();
 
@@ -14,12 +14,14 @@ const TransactionList = ({ name = "" }) => {
   }
   useEffect(() => {
 
-    if (name.length > 0) {
-      const ref = db.ref(`/${name}/transactions`);
+  }, [myContext.months])
+  useEffect(() => {
+      
+    if (name.length > 0 ) {
+      // console.log(selMonth);
+      const ref = db.ref(`/${name}/transactions/${selMonth}`);
       ref.on("value", snapshot => {
-
         const downData = snapshot.val()
-
         if (downData) {
           let tempdata = (Object.entries(downData).map(el => {
             if (el[0].toString() != 'title') {
@@ -30,15 +32,11 @@ const TransactionList = ({ name = "" }) => {
           let ex = 0;
           let inc = 0;
           tempdata = (JSON.parse(JSON.stringify(tempdata)));
-
-
-          tempdata =tempdata.sort((a, b) => {
+          tempdata = tempdata.sort((a, b) => {
             if (a && b) {
               return new Date(getDateFormat(b[0])) - new Date(getDateFormat(a[0]))
             }
-            
           })
-          
           tempdata.map((el) => {
             if (el) {
               const x = getData(el[0], el[1])
@@ -55,15 +53,12 @@ const TransactionList = ({ name = "" }) => {
       })
     }
 
-  }, [])
+  }, [selMonth])
 
   const getData = (date, dt) => {
-
     let tex = 0;
     let tin = 0;
-
     const cells = Object.entries(dt).map((el) => {
-
       if (el[1].type === "Expense")
         tex += Number.parseInt(el[1].amount)
       else
@@ -77,11 +72,12 @@ const TransactionList = ({ name = "" }) => {
   return (
 
 
-    <div >
+    <div className='scrollbar-hide' >
 
       {data && <Transaction
         data={data}
-        name={name} />}
+        name={name}
+        pathkey={selMonth} />}
     </div>
 
 

@@ -4,7 +4,15 @@ import { json, useNavigate } from 'react-router-dom'
 import './index.css'
 import { getexpenseCategories, getincomeCategories } from '../../util/util';
 import { db } from '../..//util/firebase.js'
+import DatePicker from '../../util/DatePicker';
 
+
+const getToday = () => {
+  const todaydate = new Date()
+  const today = todaydate.getDate() + "-" + (todaydate.getMonth() + 1) + "-" + todaydate.getFullYear()
+  return today
+  // setDate(today)
+}
 const InputTransaction = () => {
 
   const [typeVal, setTypeVal] = useState("Expense");
@@ -15,24 +23,18 @@ const InputTransaction = () => {
   const [name, setName] = useState("")
   const [in_cat, setin_cat] = useState(getincomeCategories())
   const [ex_cat, setex_cat] = useState(getexpenseCategories())
+  const [dateTime, setDateTime] = useState()
   const expenseCategories = []
-
   const incomeCategories = []
-
 
   useEffect(() => {
     const getName = JSON.parse(localStorage.getItem('user')).name
     if (getName) {
       setName(getName)
     }
-        setex_cat([...ex_cat, '...+'])
-        setin_cat([...in_cat, '...+'])
+    setex_cat([...ex_cat, '...+'])
+    setin_cat([...in_cat, '...+'])
   }, [])
- 
-
-
-
-
   const handleChange = (e) => {
     setAmount(e.target.value)
   }
@@ -56,7 +58,8 @@ const InputTransaction = () => {
       return {
         'type': typeVal,
         'amount': Number.parseInt(amount),
-        'category': otherValue,
+        'category': cateValue,
+        'other': otherValue
       }
     }
     else {
@@ -64,18 +67,14 @@ const InputTransaction = () => {
         'type': typeVal,
         'amount': Number.parseInt(amount),
         'category': cateValue,
+        'other': ""
       }
     }
   }
 
   const upload = () => {
-
-    const date = new Date
-    const today = date.getDate() + "-" + (date.getMonth() + 1) + "-" + date.getFullYear()
-    const time = date.getTime()
     const readyData = formatData()
-    db.ref(`/${name}/transactions/${today}/${time}`).set(readyData).catch((e) => { console.log(e); });
-
+    db.ref(`/${name}/transactions/${dateTime.pathKey}/${dateTime.date}/${dateTime.time}`).set(readyData).catch((e) => { console.log(e); });
   }
 
   const handleHome = () => {
@@ -91,6 +90,9 @@ const InputTransaction = () => {
       setAmount(0)
       setCateVal("")
       setOtherValue("")
+      const x = new Date();
+      const month = x.getMonth() + 1
+      setDateTime({ pathKey: x.getFullYear() + "-" + month, 'date': x.getDate() + "-" + (x.getMonth() + 1) + "-" + x.getFullYear(), 'time': x.getTime() })
     }
 
   }
@@ -106,23 +108,24 @@ const InputTransaction = () => {
 
   const handleKey = (e) => {
     if (e.target.parentNode.childNodes[0].value.trim().length > 0) {
-      const x=[...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()] 
-      const y= [...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim()] 
-      typeVal === 'Income' ?  db.ref(`/${name}/categories/income_cat}`).set(y).catch((e) => { console.log(e); }):
-       db.ref(`/${name}/categories/expense_cat}`).set(x).catch((e) => { console.log(e); });
-      
-      typeVal === 'Income' ? setin_cat([...(in_cat.slice(0,in_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+']): setex_cat([...(ex_cat.slice(0,ex_cat.length-1)),e.target.parentNode.childNodes[0].value.trim(),'...+'])
-   
+      const x = [...(ex_cat.slice(0, ex_cat.length - 1)), e.target.parentNode.childNodes[0].value.trim()]
+      const y = [...(in_cat.slice(0, in_cat.length - 1)), e.target.parentNode.childNodes[0].value.trim()]
+      typeVal === 'Income' ? db.ref(`/${name}/categories/income_cat}`).set(y).catch((e) => { console.log(e); }) :
+        db.ref(`/${name}/categories/expense_cat}`).set(x).catch((e) => { console.log(e); });
+
+      typeVal === 'Income' ? setin_cat([...(in_cat.slice(0, in_cat.length - 1)), e.target.parentNode.childNodes[0].value.trim(), '...+']) :
+        setex_cat([...(ex_cat.slice(0, ex_cat.length - 1)), e.target.parentNode.childNodes[0].value.trim(), '...+'])
+
     }
 
-    document.getElementById("cateAdd").childNodes[0].value=""
+    document.getElementById("cateAdd").childNodes[0].value = ""
     document.getElementById("cateAdd").style.display = "none"
 
   }
 
-useEffect(()=>{
-  localStorage.setItem('expense_cat',JSON.stringify(ex_cat.slice(0,ex_cat.length-1)))
-},[ex_cat])
+  useEffect(() => {
+    localStorage.setItem('expense_cat', JSON.stringify(ex_cat.slice(0, ex_cat.length - 1)))
+  }, [ex_cat])
   useEffect(() => {
     setCateVal("")
   }, [typeVal])
@@ -159,6 +162,12 @@ useEffect(()=>{
       else
         console.log("cancel");
     } */
+
+
+  const handleDateChange = (e) => {
+    const x = new Date(e.target.value)
+    // setDate(e.target.value)
+  }
 
 
 
@@ -202,7 +211,22 @@ useEffect(()=>{
               onChange={handleChange}//{this.onChangeAmountInput}
               placeholder="AMOUNT"
             />
-            <label className="input-label" htmlFor="title">
+            <label className="input-label" htmlFor="date">
+              DATE
+            </label>
+            <DatePicker formatter={setDateTime} name="date" />
+            {/*   <input
+              type="date"
+              id="date"
+
+              className="inputa"
+              value={date}//{amountInput}
+              onChange={handleDateChange}//{this.onChangeAmountInput}
+              placeholder="dd-mm-yyyy"
+              min="01-01-1997" max="31-12-2030"
+
+            /> */}
+            <label className="input-label mt-1" htmlFor="title">
               CATEGORY
             </label>
             <input
@@ -230,7 +254,7 @@ useEffect(()=>{
               }
               )}
               {typeVal === "Expense" && ex_cat.map((el, index) => {
-                
+
                 return (
                   <p onClick={selectCate} key={"ex" + index}
                     className='cate hover:cursor-pointer active:bg-[#99dad3] mr-2
@@ -239,8 +263,8 @@ useEffect(()=>{
               )}
               <div id="cateAdd" className='relative rounded-lg' style={{ display: 'none' }} >
                 <input type={'text'}
-                  className= ' text-[#000] px-1 hover:cursor-pointer rounded-md bg-opacity-60' /> 
-                  <span onClick={handleKey} className=' px-1 absolute right-0 text-[#000] bg-[#e1e1e1] bg-opacity-60 
+                  className=' text-[#000] px-1 hover:cursor-pointer rounded-md bg-opacity-60' />
+                <span onClick={handleKey} className=' px-1 absolute right-0 text-[#000] bg-[#e1e1e1] bg-opacity-60 
                    drop-shadow-lg rounded-sm  hover:cursor-pointer'> ADD</span>  </div>
             </div>
             <div className='btn-container mt-2'>

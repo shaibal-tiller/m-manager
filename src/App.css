@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+
+  @apply
+  scrollbar-hide
 }
 
 .App-logo {

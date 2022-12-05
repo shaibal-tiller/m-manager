@@ -2,26 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
-body
-{
-  overscroll-behavior-y: contain;
-}
 .appContainer {
     display: flex;
     justify-content: center;
     align-items: start;
-    min-height: 100vh;   
+    min-height: 100vh; 
+     
+    @apply
+    scrollbar-hide
   }
-  .prevent-select {
-  -webkit-user-select: none;
-  -ms-user-select: none; 
-  user-select: none; 
-}
+  
   .responsive-container {
     background-color: black;
     color: azure;
     width: 100%;
     max-width: 550px;
     min-width: 100px;
+    @apply
+    scrollbar-hide
   }
   
